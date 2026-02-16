@@ -1,0 +1,16 @@
+# Gradle
+.gradle/
+build/
+
+# IDE - VS Code
+.vscode/
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Java
+*.class
+*.jar
+*.war
+hs_err_pid*

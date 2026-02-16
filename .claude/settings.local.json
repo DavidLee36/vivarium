@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(javac:*)",
+      "Bash(java:*)",
+      "WebSearch",
+      "WebFetch(domain:libgdx.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(gradle:*)",
+      "Bash(./gradlew core:compileJava:*)",
+      "Bash(./gradlew desktop:compileJava:*)",
+      "Bash(./gradlew desktop:run:*)",
+      "Bash(./gradlew compileJava:*)",
+      "Bash(./gradlew dependencies:*)",
+      "Bash(./gradlew run:*)"
+    ]
+  }
+}
