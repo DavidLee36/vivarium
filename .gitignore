@@ -5,6 +5,9 @@ build/
 # IDE - VS Code
 .vscode/
 
+# Logs
+logs/
+
 # OS files
 Thumbs.db
 Desktop.ini
