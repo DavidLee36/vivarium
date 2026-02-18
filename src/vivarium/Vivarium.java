@@ -4,10 +4,10 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.graphics.g2d.*;
 
-import vivarium.map.*;
 import vivarium.utils.Logger;
 
 public class Vivarium extends ApplicationAdapter {
@@ -16,16 +16,16 @@ public class Vivarium extends ApplicationAdapter {
 	private ScreenViewport viewport;
 	private SpriteBatch batch;
 	private BitmapFont font;
+	private Timer.Task task;
 
 	private World world;
 	private static final float HEX_SIZE = 40;
+	private static final float TICK_DELAY = 1f;
 
 	@Override
 	public void create() {
-		initGdx();
+		initEngine();
 		initSimulation();
-		Gdx.graphics.setContinuousRendering(false);
-		Gdx.graphics.requestRendering();
 	}
 
 	@Override
@@ -55,9 +55,9 @@ public class Vivarium extends ApplicationAdapter {
 	}
 
 	/**
-	 * Initialize all Gdx related objects and settings
+	 * Initialize all engine related objects and data
 	 */
-	private void initGdx() {
+	private void initEngine() {
 		shapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera();
 		viewport = new ScreenViewport(camera);
@@ -73,19 +73,31 @@ public class Vivarium extends ApplicationAdapter {
 				return true;
 			}
 		});
+
+		Gdx.graphics.setContinuousRendering(false);
+		Gdx.graphics.requestRendering();
 	}
 
 	/**
-	 * Initialize all simulation (my shit) objects and settings
+	 * Initialize all simulation related objects and data
 	 */
 	private void initSimulation() {
 		Logger.clear();
 		world = new World();
+
+		task = new Timer.Task() {
+			@Override
+			public void run() {
+				world.runTick();
+			}
+		};
+		Timer.schedule(task, TICK_DELAY, TICK_DELAY);
 	}
 
 	/**
 	 * Main draw method — clears the screen and renders each layer in order.
-	 * Order matters: filled hexes first, then outlines on top, then text on top of everything.
+	 * Order matters: filled hexes first, then outlines on top, then text on top of
+	 * everything.
 	 */
 	private void draw() {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.12f, 1);

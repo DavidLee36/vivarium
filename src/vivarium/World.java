@@ -9,7 +9,7 @@ public class World {
 	private static final int MAP_RADIUS = 5;
 
 	private Map map;
-	private static int tickCount = 0;
+	private static int currTick = 0;
 	private int runTime;
 
 	private int totalAnimals = 0;
@@ -21,11 +21,12 @@ public class World {
 		logWorldCreation();
 	}
 
-	public void run() {
-		while(tickCount < runTime) {
-			System.out.println(tickCount);
-			tickCount++;
-		}
+	/**
+	 * Main heart of the simulation, this code runs each tick controlling what happens each tick
+	 */
+	protected void runTick() {
+		currTick++;
+		Logger.log("Running", true);
 	}
 
 	/**
@@ -43,7 +44,7 @@ public class World {
 	//#region Getters and Setters
 
 	public Map getMap() { return map; }
-	public static int getTickCount() { return tickCount; }
+	public static int getTickCount() { return currTick; }
 	public int getTotalAnimals() { return totalAnimals; }
 	public int getTotalPlants() { return totalPlants; }
 

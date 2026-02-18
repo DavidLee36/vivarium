@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Map {
 	private int radius;
-	private HashMap<String, Hex> hexes;
+	private HashMap<Coordinate, Hex> hexes;
 
 	public Map(int radius) {
 		this.radius = radius;
@@ -17,8 +17,8 @@ public class Map {
 		for(int q = -radius; q <= radius; q++) {
 			for(int r = -radius; r <= radius; r++) {
 				if(Math.abs(q + r) <= radius) {
-					String key = q + "," + r;
-					hexes.put(key, new Hex(q, r));
+					Hex hex = new Hex(q, r);
+					hexes.put(hex.getCoordinate(), hex);
 				}
 			}
 		}
@@ -38,6 +38,6 @@ public class Map {
 	}
 
 	public Hex getHex(int q, int r) {
-		return hexes.get(q + "," + r);
+		return hexes.get(new Coordinate(q, r));
 	}
 }

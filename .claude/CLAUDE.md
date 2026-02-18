@@ -41,14 +41,22 @@ src/vivarium/
 - **Map** (in `vivarium.map` package) - Hex grid container. Will hold Hex objects with biome data.
 
 ### Organism Hierarchy (Planned)
+Taxonomic class hierarchy. Diet (herbivore, carnivore, omnivore, scavenger) is a property on Animal, not a class.
 ```
 Organism (abstract)
-├── Plant (Grass, Shrub, Tree)
+├── Plant (abstract)
+│   └── Grass, Shrub, Tree
 └── Animal (abstract)
-    ├── Herbivore (Deer, Rabbit, Mountain Goat)
-    ├── Carnivore (Wolf, Bear)
-    ├── Omnivore
-    └── Scavenger
+    ├── Mammal (abstract) — warm-blooded, fur/insulation
+    │   └── Wolf, Deer, Bear, Rabbit...
+    ├── Bird (abstract) — flight, feathers
+    │   └── Eagle, Crow...
+    ├── Reptile (abstract) — cold-blooded, temperature-dependent
+    │   └── Snake, Lizard...
+    ├── Amphibian (abstract) — needs proximity to water
+    │   └── Frog...
+    └── Fish (abstract) — aquatic
+        └── Trout...
 ```
 
 ## Key Technical Decisions
