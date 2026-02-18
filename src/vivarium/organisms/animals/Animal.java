@@ -9,6 +9,23 @@ public abstract class Animal extends Organism {
 	}
 
 	@Override
+	public float heal(float health) {
+		currHealth += health;
+		if (currHealth > maxHealth) currHealth = maxHealth;
+		return currHealth;
+	}
+
+	@Override
+	public float hurt(float damage) {
+		currHealth -= damage;
+		if (currHealth <= 0f) {
+			die();
+			currHealth = 0;
+		}
+		return currHealth;
+	}
+
+	@Override
 	public final void die() {
 		//TODO: remove animal from the animal array list in map
 		super.die();

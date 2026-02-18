@@ -14,6 +14,10 @@ public abstract class Organism {
 		this.currHealth = maxHealth;
 	}
 
+	public abstract float hurt(float damage);
+
+	public abstract float heal(float health);
+
 	public void die() {
 		this.alive= false;
 	}
