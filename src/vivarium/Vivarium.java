@@ -3,11 +3,13 @@ package vivarium;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.*;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.graphics.g2d.*;
 
+import vivarium.map.Hex;
 import vivarium.utils.Logger;
 
 public class Vivarium extends ApplicationAdapter {
@@ -22,6 +24,8 @@ public class Vivarium extends ApplicationAdapter {
 	private static final float HEX_SIZE = 40;
 	private static final float TICK_DELAY = 1f;
 
+	//#region Public Methods
+
 	@Override
 	public void create() {
 		initEngine();
@@ -31,6 +35,7 @@ public class Vivarium extends ApplicationAdapter {
 	@Override
 	public void render() {
 		pan();
+		leftClick();
 		draw();
 	}
 
@@ -38,6 +43,10 @@ public class Vivarium extends ApplicationAdapter {
 	public void resize(int width, int height) {
 		viewport.update(width, height, false);
 	}
+
+	public static float getHexSize() { return HEX_SIZE; }
+
+	//#endregion
 
 	// #region Non-Public Methods
 
@@ -48,10 +57,20 @@ public class Vivarium extends ApplicationAdapter {
 		if (Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.MIDDLE)) {
 			float dx = -Gdx.input.getDeltaX() * camera.zoom; // How many pixels the mouse moved X since last frame
 			float dy = Gdx.input.getDeltaY() * camera.zoom; // How many pixels the mouse moved Y since last frame
-			camera.position.x += dx;
-			camera.position.y += dy;
+			camera.translate(dx, dy);
 		}
 		camera.update();
+	}
+
+	private void leftClick() {
+		if (Gdx.input.isButtonJustPressed(com.badlogic.gdx.Input.Buttons.LEFT)) {
+			Vector3 worldCoord = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+			Hex hex = world.getMap().getHexAt(worldCoord);
+			if (hex != null) {
+				//TODO: Show hex data on screen
+				Logger.log(hex.getHexCoordinate().toString(), false);
+			}
+		}
 	}
 
 	/**

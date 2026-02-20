@@ -3,11 +3,11 @@ package vivarium.map;
 import vivarium.map.biomes.*;
 
 public class Hex {
-    private Coordinate coordinate;
+    private HexCoordinate coordinate;
 	private Biome biome;
 
     protected Hex(int q, int r) {
-        coordinate = new Coordinate(q, r);
+        coordinate = new HexCoordinate(q, r);
 		biome = BiomeType.random().create();
     }
 
@@ -32,6 +32,6 @@ public class Hex {
     }
 
 	public Biome getBiome() { return biome; }
-	protected Coordinate getCoordinate() { return coordinate; }
+	public HexCoordinate getHexCoordinate() { return coordinate; }
 }
 

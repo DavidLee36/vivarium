@@ -1,17 +1,17 @@
 package vivarium.map;
 
-public class Coordinate {
+public class HexCoordinate {
 	protected int q;
 	protected int r;
 	protected int s;
 
-	protected Coordinate(int q, int r) {
+	protected HexCoordinate(int q, int r) {
 		this.q = q;
         this.r = r;
 		this.s = -q-r;
 	}
 
-	protected Coordinate(int q, int r, int s) {
+	protected HexCoordinate(int q, int r, int s) {
 		this.q = q;
         this.r = r;
 		this.s = s;
@@ -20,13 +20,18 @@ public class Coordinate {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (!(obj instanceof Coordinate)) return false;
-		Coordinate other = (Coordinate) obj;
+		if (!(obj instanceof HexCoordinate)) return false;
+		HexCoordinate other = (HexCoordinate) obj;
 		return q == other.q && r == other.r && s == other.s;
 	}
 
 	@Override
 	public int hashCode() {
 		return 31 * q + r;
+	}
+
+	@Override
+	public String toString() {
+		return q + ", " + r + ", " + s;
 	}
 }

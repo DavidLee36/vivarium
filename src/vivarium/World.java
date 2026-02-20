@@ -26,7 +26,6 @@ public class World {
 	 */
 	protected void runTick() {
 		currTick++;
-		Logger.log("Running", true);
 	}
 
 	/**

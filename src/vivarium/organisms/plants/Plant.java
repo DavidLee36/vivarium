@@ -11,7 +11,6 @@ public class Plant extends Organism {
 	@Override
 	public float heal(float health) {
 		currHealth += health;
-		if (currHealth > maxHealth) currHealth = maxHealth;
 		return currHealth;
 	}
 
@@ -19,15 +18,15 @@ public class Plant extends Organism {
 	public float hurt(float damage) {
 		currHealth -= damage;
 		if (currHealth <= 0f) {
-			die();
+			kill();
 			currHealth = 0;
 		}
 		return currHealth;
 	}
 
 	@Override
-	public final void die() {
+	public final void kill() {
 		//TODO: remove plant from the plant array list in map
-		super.die();
+		super.kill();
 	}
 }
