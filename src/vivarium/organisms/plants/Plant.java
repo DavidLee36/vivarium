@@ -4,24 +4,24 @@ import vivarium.map.Hex;
 import vivarium.organisms.Organism;
 
 public class Plant extends Organism {
-	public Plant(Hex hex, float maxHealth) {
-		super(hex, maxHealth);
+	public Plant(Hex hex) {
+		super(hex);
 	}
 
 	@Override
 	public float heal(float health) {
-		currHealth += health;
-		return currHealth;
+		this.health += health;
+		return this.health;
 	}
 
 	@Override
 	public float hurt(float damage) {
-		currHealth -= damage;
-		if (currHealth <= 0f) {
+		this.health -= damage;
+		if (this.health <= 0f) {
 			kill();
-			currHealth = 0;
+			this.health = 0;
 		}
-		return currHealth;
+		return this.health;
 	}
 
 	@Override

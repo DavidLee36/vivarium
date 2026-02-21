@@ -4,33 +4,35 @@ import java.util.ArrayList;
 
 import vivarium.map.Hex;
 import vivarium.organisms.Organism;
+import vivarium.utils.Logger;
 
 public abstract class Animal extends Organism {
 	protected boolean warmBlooded;
-	protected ArrayList<Organism> prey;
-	protected ArrayList<Organism> killedPrey;
-	protected float currStamina;
-	protected float currHunger;
-	protected float baseDamage;
+	protected ArrayList<Organism> prey = new ArrayList<>();
+	protected ArrayList<Organism> killedPrey = new ArrayList<>();
+	protected float stamina = 100f;
+	protected float hunger = 95f;
+	protected float baseDamage = 30f;
 
-	public Animal(Hex hex, float health, boolean warmBlooded) {
-		super(hex, health);
+	public Animal(Hex hex, boolean warmBlooded) {
+		super(hex);
+		this.warmBlooded = warmBlooded;
 	}
 
 	@Override
 	public float heal(float health) {
-		currHealth += health;
-		return currHealth;
+		this.health += health;
+		return this.health;
 	}
 
 	@Override
 	public float hurt(float damage) {
-		currHealth -= damage;
-		if (currHealth <= 0f) {
+		this.health -= damage;
+		if (this.health <= 0f) {
 			kill();
-			currHealth = 0;
+			this.health = 0;
 		}
-		return currHealth;
+		return this.health;
 	}
 
 	@Override
@@ -58,6 +60,13 @@ public abstract class Animal extends Organism {
 		}
 	}
 
+	public void log() {
+		Logger.log("Animal: " + this.getClass().getSimpleName());
+		Logger.log("Spawned on tick: " + spawnTick);
+		Logger.log("Health: " + health);
+		Logger.log("Hunger: " + hunger);
+	}
+
 	//#region Getters and Setters
 	
 	public ArrayList<Organism> getPrey() {
@@ -65,11 +74,11 @@ public abstract class Animal extends Organism {
 	}
 
 	public float getStamina() {
-		return currStamina;
+		return stamina;
 	}
 
 	public float getHunger() {
-		return currHunger;
+		return hunger;
 	}
 
 	//#endregion

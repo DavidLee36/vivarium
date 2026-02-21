@@ -21,6 +21,10 @@ public class Logger {
 		}
 	}
 
+	public static void log(String msg) {
+		log(msg, false);
+	}
+
 	public static void log(String msg, boolean showTick) {
 		try {
 			FileWriter writer = new FileWriter(PATH + defaultLog, true);

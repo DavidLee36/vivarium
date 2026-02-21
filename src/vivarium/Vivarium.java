@@ -67,8 +67,7 @@ public class Vivarium extends ApplicationAdapter {
 			Vector3 worldCoord = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			Hex hex = world.getMap().getHexAt(worldCoord);
 			if (hex != null) {
-				//TODO: Show hex data on screen
-				Logger.log(hex.getHexCoordinate().toString(), false);
+				hex.log();
 			}
 		}
 	}

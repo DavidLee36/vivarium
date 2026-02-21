@@ -6,7 +6,6 @@ import java.util.HashMap;
 import com.badlogic.gdx.math.Vector3;
 
 import vivarium.Vivarium;
-import vivarium.World;
 
 public class Map {
 	private int radius;
@@ -23,18 +22,10 @@ public class Map {
 			for (int r = -radius; r <= radius; r++) {
 				if (Math.abs(q + r) <= radius) {
 					Hex hex = new Hex(q, r);
+					hex.spawnRandomAnimal();
 					hexes.put(hex.getHexCoordinate(), hex);
 				}
 			}
-		}
-	}
-
-	/**
-	 * Print the distance from each hex to origin
-	 */
-	public void printDistances() {
-		for (Hex hex : getHexes()) {
-			System.out.println("Distance from " + hex.getQ() + ", " + hex.getR() + ": " + hex.distanceTo(getHexAt(0, 0)));
 		}
 	}
 
