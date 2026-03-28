@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cm24u13na67jl"]
+
+[ext_resource type="Script" uid="uid://dky2uycbfd5dm" path="res://scripts/mote.gd" id="1_a6q65"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8f87p"]
+albedo_color = Color(0, 0.3882353, 1, 1)
+metallic = 0.5
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_8f87p"]
+material = SubResource("StandardMaterial3D_8f87p")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_a6q65"]
+
+[node name="Mote" type="CharacterBody3D" unique_id=1537494994]
+wall_min_slide_angle = 0.08726646
+script = ExtResource("1_a6q65")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=491617556]
+mesh = SubResource("BoxMesh_8f87p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1402596076]
+shape = SubResource("SphereShape3D_a6q65")

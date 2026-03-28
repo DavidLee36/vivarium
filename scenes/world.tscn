@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://c26srvovprmu6"]
+
+[ext_resource type="Texture2D" uid="uid://c2njtf076yown" path="res://addons/kenney_prototype_textures/dark/texture_04.png" id="1_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://cm24u13na67jl" path="res://scenes/mote.tscn" id="2_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://bsxy22x3hm8o6" path="res://scenes/camera.tscn" id="3_4wyf3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4wyf3"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_k0juu"]
+sky_material = SubResource("ProceduralSkyMaterial_4wyf3")
+
+[sub_resource type="Environment" id="Environment_71j4m"]
+background_mode = 2
+sky = SubResource("Sky_k0juu")
+tonemap_mode = 2
+sdfgi_enabled = true
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rwgxs"]
+albedo_texture = ExtResource("1_4wyf3")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4wyf3"]
+material = SubResource("StandardMaterial3D_rwgxs")
+size = Vector2(240, 135)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4wyf3"]
+
+[node name="World" type="Node3D" unique_id=1424691490]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1834816696]
+environment = SubResource("Environment_71j4m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1394844203]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Map" type="Node3D" parent="." unique_id=172907629]
+
+[node name="Floor" type="StaticBody3D" parent="Map" unique_id=117586258]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/Floor" unique_id=1414479997]
+mesh = SubResource("PlaneMesh_4wyf3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Floor" unique_id=1979634098]
+shape = SubResource("WorldBoundaryShape3D_4wyf3")
+
+[node name="CharacterBody3D" parent="." unique_id=1537494994 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5753527, 0)
+
+[node name="Camera3D" parent="." unique_id=1357480943 instance=ExtResource("3_4wyf3")]
+transform = Transform3D(1, 0, 0, 0, 0.25881907, 0.9659258, 0, -0.9659258, 0.25881907, 0, 21.260231, 0)
+
+[node name="CharacterBody3D2" parent="." unique_id=558177774 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 1, 8)
+
+[node name="CharacterBody3D3" parent="." unique_id=27871597 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 1, 10)
+
+[node name="CharacterBody3D4" parent="." unique_id=1500147461 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 1, -10)
+
+[node name="CharacterBody3D5" parent="." unique_id=1859296904 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 1, 22)
+
+[node name="CharacterBody3D6" parent="." unique_id=1461217741 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, -9)
+
+[node name="CharacterBody3D7" parent="." unique_id=1866626113 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1, 21)
+
+[node name="CharacterBody3D8" parent="." unique_id=1574653619 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1, 33)
+
+[node name="CharacterBody3D9" parent="." unique_id=7527592 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 1, -4)
