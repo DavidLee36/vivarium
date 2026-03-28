@@ -7,7 +7,7 @@ enum State {
 }
 
 var state: State = State.WANDERING
-@onready var target_position: Vector3 = global_position # Currently we only use x, z but eventually we may use y axis?
+@onready var target_position: Vector3 = global_position
 var rotation_speed_min: float = 1.5
 var rotation_speed_max: float = 5.0
 
