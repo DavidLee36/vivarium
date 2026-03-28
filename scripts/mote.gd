@@ -28,7 +28,7 @@ func _physics_process(delta: float) -> void:
 
 func _movement_logic(delta: float) -> void:
 	if not is_on_floor():
-		velocity.y -= 20 * delta # TODO: Remove magic number
+		velocity.y -= 20 * delta
 	if state == State.WANDERING:
 		_wander()
 
