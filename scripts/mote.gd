@@ -11,8 +11,10 @@ enum State {
 var state: State = State.WANDERING
 
 var target_position: Vector3
+var last_tick_position: Vector3
 var rotation_speed_min: float = 1.5
 var rotation_speed_max: float = 5.0
+var stuck: bool = false
 
 var move_r: int = 20
 
@@ -29,6 +31,13 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_update_curr_state()
 	_movement_logic(delta)
+
+func tick() -> void:
+	if _at_position_buffer(global_position, last_tick_position, 0.05):
+		print("stuck")
+		stuck = true
+	else: stuck = false
+	last_tick_position = global_position
 
 func _movement_logic(delta: float) -> void:
 	if not is_on_floor():
@@ -50,7 +59,7 @@ func _update_curr_state() -> void:
 	pass
 
 func _wander() -> bool:
-	if _at_position_buffer(0.05) or (global_position.x == 0 and global_position.z == 0): # Pick a new target pos
+	if _at_position_buffer(global_position, target_position, 0.05) or stuck: # Pick a new target pos
 		target_position.x = clamp(randi_range(int(global_position.x) - move_r, int(global_position.x) + move_r), SimManager.left_bound, SimManager.right_bound)
 		target_position.z = clamp(randi_range(int(global_position.z) - move_r, int(global_position.z) + move_r), SimManager.bottom_bound, SimManager.top_bound)
 		return true
@@ -62,8 +71,8 @@ func die() -> void:
 func _seek_resource() -> void:
 	pass
 
-func _at_position_buffer(buffer: float) -> bool:
+func _at_position_buffer(pos_1: Vector3, pos_2: Vector3, buffer: float) -> bool:
 	# Currently only deal with x and z
-	if abs(global_position.x - target_position.x) < buffer and abs(global_position.z - target_position.z) < buffer:
+	if abs(pos_1.x - pos_2.x) < buffer and abs(pos_1.z - pos_2.z) < buffer:
 		return true
 	return false

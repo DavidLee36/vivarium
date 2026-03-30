@@ -22,7 +22,8 @@ func _ready() -> void:
 func _tick() -> void:
 	curr_tick += 1
 	_spawn_random()
-	print("Total Motes: ", motes.size())
+	for mote in motes:
+		mote.tick()
 
 func register_mote(mote: Mote) -> void:
 	motes.append(mote)
