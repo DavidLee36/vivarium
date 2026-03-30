@@ -1,6 +1,6 @@
 extends Camera3D
 
-@export var default_speed: float = 10
+@export var default_speed: float = 15
 @export var sensitivity: float = 0.3
 
 var _mouse_delta := Vector2.ZERO
@@ -11,12 +11,19 @@ func _input(event: InputEvent) -> void:
 		_mouse_delta = event.relative
 
 func _physics_process(delta: float) -> void:
+	_misc_input()
 	_movement_logic(delta)
 	_mouse_delta = Vector2.ZERO
 
+func _misc_input() -> void:
+	if Input.is_action_pressed("speed_time"):
+		Engine.time_scale = 5.0
+	else:
+		Engine.time_scale = 1.
+
 func _movement_logic(delta: float) -> void:
 	# Speed
-	var speed = default_speed * 2 if Input.is_action_pressed("shift") else default_speed
+	var speed = default_speed * 4 if Input.is_action_pressed("shift") else default_speed
 	
 	# WASD
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
