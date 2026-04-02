@@ -33,6 +33,7 @@ func _physics_process(delta: float) -> void:
 	_update_curr_state()
 	_movement_logic(delta)
 
+## Code that should run at every tick of the simulation, not every frame
 func tick() -> void:
 	if randf_range(0, 1) <= death_chance:
 		die()
@@ -63,6 +64,7 @@ func _movement_logic(delta: float) -> void:
 func _update_curr_state() -> void:
 	pass
 
+## Aimlessly wander around
 func _wander() -> bool:
 	if _at_position_buffer(global_position, target_position, 0.05) or stuck: # Pick a new target pos
 		target_position.x = clamp(randi_range(int(global_position.x) - move_r, int(global_position.x) + move_r), SimManager.left_bound, SimManager.right_bound)
@@ -77,6 +79,7 @@ func die() -> void:
 func _seek_resource() -> void:
 	pass
 
+## Check if a mote is within 'buffer' meters of it's target location
 func _at_position_buffer(pos_1: Vector3, pos_2: Vector3, buffer: float) -> bool:
 	# Currently only deal with x and z
 	if abs(pos_1.x - pos_2.x) < buffer and abs(pos_1.z - pos_2.z) < buffer:
