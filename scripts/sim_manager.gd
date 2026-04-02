@@ -20,13 +20,23 @@ func _ready() -> void:
 	_timer_setup()
 
 func _tick() -> void:
-	curr_tick += 1
+	_pre_tick()
 	_spawn_random()
 	for mote in motes:
 		mote.tick()
+	_post_tick()
+
+func _pre_tick() -> void: # Code taht should always run before/start of the tick
+	curr_tick += 1
+
+func _post_tick() -> void: # Code that should always run after/end of the tick
+	pass
 
 func register_mote(mote: Mote) -> void:
 	motes.append(mote)
+
+func unregsiter_mote(mote: Mote) -> void:
+	motes.remove_at(motes.find(mote))
 
 func _spawn_random() -> void:
 	var spawn_point = Vector3(randf_range(left_bound, right_bound), 1, randf_range(bottom_bound, top_bound))

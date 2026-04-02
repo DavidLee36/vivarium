@@ -20,6 +20,7 @@ var move_r: int = 20
 
 var sight_r: int = 10
 var speed: int = 5
+var death_chance: float = 0.05 # between 0-1
 
 var food: float = 100
 var water: float = 100
@@ -33,6 +34,9 @@ func _physics_process(delta: float) -> void:
 	_movement_logic(delta)
 
 func tick() -> void:
+	if randf_range(0, 1) <= death_chance:
+		die()
+	
 	if _at_position_buffer(global_position, last_tick_position, 0.05):
 		print("stuck")
 		stuck = true
@@ -52,6 +56,7 @@ func _movement_logic(delta: float) -> void:
 		var target_basis := Basis.looking_at(flat_dir)
 		transform.basis = transform.basis.slerp(target_basis, delta * remap(turn_angle, 0, 180, rotation_speed_min, rotation_speed_max))
 	velocity = lerp(velocity, dir * speed, delta * 2.0)
+	#velocity = dir * speed
 
 	move_and_slide()
 
@@ -66,7 +71,8 @@ func _wander() -> bool:
 	return false
 
 func die() -> void:
-	pass
+	SimManager.unregsiter_mote(self)
+	queue_free()
 
 func _seek_resource() -> void:
 	pass
