@@ -55,6 +55,11 @@ func _spawn_random() -> void:
 	new_mote.position = spawn_point
 	scene_tree.get_root().get_node("World/Motes").add_child(new_mote)
 
+## Code that should run at the very end of the simulation
+func _end_simulation() -> void:
+	var sim_data_str = JSON.stringify(sim_data, "\t")
+	Util.write_to_file("sim_runs/run.json", sim_data_str)
+	pass
 
 ## Create a timer to call tick() every time the timer ends
 func _timer_setup() -> void:
