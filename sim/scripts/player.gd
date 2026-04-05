@@ -1,4 +1,4 @@
-extends Camera3D
+extends Node3D
 
 @export var default_speed: float = 15
 @export var sensitivity: float = 0.3
@@ -11,15 +11,17 @@ func _input(event: InputEvent) -> void:
 		_mouse_delta = event.relative
 
 func _physics_process(delta: float) -> void:
-	_misc_input()
+	_handle_input()
 	_movement_logic(delta)
 	_mouse_delta = Vector2.ZERO
 
-func _misc_input() -> void:
+func _handle_input() -> void:
 	if Input.is_action_pressed("speed_time"):
 		Engine.time_scale = 5.0
 	else:
-		Engine.time_scale = 1.
+		Engine.time_scale = 30.
+	if Input.is_action_just_pressed("end_sim"):
+		SimManager.end_simulation()
 
 func _movement_logic(delta: float) -> void:
 	# Speed

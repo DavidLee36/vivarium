@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c26srvovprmu6"]
 
 [ext_resource type="Texture2D" uid="uid://c2njtf076yown" path="res://addons/kenney_prototype_textures/dark/texture_04.png" id="1_4wyf3"]
-[ext_resource type="PackedScene" uid="uid://bsxy22x3hm8o6" path="res://scenes/camera.tscn" id="3_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://0egsluq30sym" path="res://scenes/player.tscn" id="2_rwgxs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4wyf3"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -46,7 +46,7 @@ mesh = SubResource("PlaneMesh_4wyf3")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Floor" unique_id=1979634098]
 shape = SubResource("WorldBoundaryShape3D_4wyf3")
 
-[node name="Camera3D" parent="." unique_id=1357480943 instance=ExtResource("3_4wyf3")]
-transform = Transform3D(-1, 2.262667e-08, -8.44439e-08, -6.181722e-08, 0.50000006, 0.8660254, 6.1817225e-08, 0.8660254, -0.50000006, 0, 78.26023, -72)
-
 [node name="Motes" type="Node3D" parent="." unique_id=2069576188]
+
+[node name="Player" parent="." unique_id=1209916089 instance=ExtResource("2_rwgxs")]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 53, 69)

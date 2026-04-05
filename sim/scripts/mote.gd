@@ -39,7 +39,6 @@ func tick() -> void:
 		die()
 	
 	if _at_position_buffer(global_position, last_tick_position, 0.05):
-		print("stuck")
 		stuck = true
 	else: stuck = false
 	last_tick_position = global_position
