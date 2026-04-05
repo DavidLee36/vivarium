@@ -8,7 +8,7 @@ var right_bound: float = 75
 var top_bound: float = 75
 var bottom_bound: float = -75
 
-var TICK_TIME: float = 1 # In seconds
+var TICK_TIME: float = 0.25 # In seconds
 var tick_timer: Timer
 var curr_tick: int = 0
 var end_at_tick: int = 500
