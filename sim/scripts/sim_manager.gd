@@ -2,18 +2,22 @@ extends Node3D
 
 var scene_tree
 var motes_node
+var hud
 
 var left_bound: float = -75
 var right_bound: float = 75
 var top_bound: float = 75
 var bottom_bound: float = -75
 
-var TICK_TIME: float = 0.25 # In seconds
+var TICK_TIME: float = 1 # In seconds
 var tick_timer: Timer
 var curr_tick: int = 0
-var end_at_tick: int = 500
+var end_at_tick: int = 1000
 
-var sim_data = { # Data to exported to json for graphing/data collection
+signal mote_change_signal
+signal tick_signal
+
+var sim_data = {
 	"mote_count": []
 }
 
@@ -24,6 +28,7 @@ var mote_spawn_chance: float = 1
 func _ready() -> void:
 	scene_tree = get_tree()
 	motes_node = scene_tree.get_root().get_node("World/Motes")
+	hud = scene_tree.get_root().get_node("World/HUD")
 	_timer_setup()
 
 ## Code that is run every tick of the simulation
@@ -37,6 +42,7 @@ func _tick() -> void:
 ## Code that should always run before/start of each tick
 func _pre_tick() -> void:
 	curr_tick += 1
+	tick_signal.emit(curr_tick)
 
 ## Code that should always run after/end of each tick
 func _post_tick() -> void:
@@ -47,10 +53,12 @@ func _post_tick() -> void:
 ## Registers a mote to be tracked in the sim, should be called upon mote creation
 func register_mote(mote: Mote) -> void:
 	motes.append(mote)
+	mote_change_signal.emit()
 
 ## Unregister mote from living mote data, should be called whenever a mote dies
 func unregsiter_mote(mote: Mote) -> void:
 	motes.remove_at(motes.find(mote))
+	mote_change_signal.emit()
 
 ## Spawns a random mote at a random location
 func _spawn_random() -> void:
@@ -64,6 +72,18 @@ func end_simulation() -> void:
 	var sim_data_str = JSON.stringify(sim_data, "\t")
 	Util.write_to_json_file("sim_runs/run", sim_data_str)
 	get_tree().quit()
+
+## Get the current amount of live Motes
+func get_current_mote_count() -> int:
+	return motes.size()
+
+## Get the average mote count for each tick (end of tick)
+func get_mote_count_average() -> float:
+	if sim_data["mote_count"].size() == 0: return 0
+	var total = 0
+	for count in sim_data["mote_count"]:
+		total += count
+	return snapped((float(total) / sim_data["mote_count"].size()), 0.01)
 
 ## Create a timer to call tick() every time the timer ends
 func _timer_setup() -> void:

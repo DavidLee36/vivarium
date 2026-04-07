@@ -17,9 +17,9 @@ func _physics_process(delta: float) -> void:
 
 func _handle_input() -> void:
 	if Input.is_action_pressed("speed_time"):
-		Engine.time_scale = 5.0
+		Engine.time_scale = 10.0
 	else:
-		Engine.time_scale = 30.
+		Engine.time_scale = 1.
 	if Input.is_action_just_pressed("end_sim"):
 		SimManager.end_simulation()
 
