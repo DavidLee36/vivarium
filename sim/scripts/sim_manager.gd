@@ -12,7 +12,7 @@ var bottom_bound: float = -75
 var TICK_TIME: float = 1 # In seconds
 var tick_timer: Timer
 var curr_tick: int = 0
-var end_at_tick: int = 1000
+var end_at_tick: int = 10
 
 signal mote_change_signal
 signal tick_signal
@@ -70,7 +70,7 @@ func _spawn_random() -> void:
 ## Code that should run at the very end of the simulation
 func end_simulation() -> void:
 	var sim_data_str = JSON.stringify(sim_data, "\t")
-	Util.write_to_json_file("sim_runs/run", sim_data_str)
+	Util.write_to_json_file("sim_runs/run-t" + str(curr_tick) + "-", sim_data_str)
 	get_tree().quit()
 
 ## Get the current amount of live Motes
