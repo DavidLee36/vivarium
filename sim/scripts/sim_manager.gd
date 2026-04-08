@@ -9,10 +9,11 @@ var right_bound: float = 75
 var top_bound: float = 75
 var bottom_bound: float = -75
 
-var TICK_TIME: float = 1 # In seconds
+var TICK_TIME: float = 0.5 # In seconds
 var tick_timer: Timer
 var curr_tick: int = 0
 var end_at_tick: int = 10
+var auto_end: bool = false
 
 signal mote_change_signal
 signal tick_signal
@@ -47,7 +48,7 @@ func _pre_tick() -> void:
 ## Code that should always run after/end of each tick
 func _post_tick() -> void:
 	sim_data["mote_count"].append(motes.size())
-	if(curr_tick >= end_at_tick): end_simulation()
+	if(curr_tick >= end_at_tick and auto_end): end_simulation()
 	print(curr_tick)
 
 ## Registers a mote to be tracked in the sim, should be called upon mote creation

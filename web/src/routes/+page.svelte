@@ -33,7 +33,7 @@
 		});
 	};
 
-	const getAverage = (arr) => {
+	const getAverage = () => { // Average for each tick across all runs
 		let avgArr = []
 		for(let i = 0; i < fileData[0].mote_count.length; i++) {
 			let total = 0;
@@ -44,6 +44,19 @@
 		}
 		return avgArr;
 	};
+
+	const getFullAverage = () => { // Average for ALL ticks across all runs
+		let total = 0;
+		let ticksCounted = 0;
+		for(let i = 0; i < fileData.length; i++) {
+			for(let j = 50; j < fileData[i].mote_count.length; j++) {
+				total += fileData[i].mote_count[j];
+				ticksCounted++;
+			}
+		}
+		let average = total / ticksCounted;
+		return new Array(fileData[0].mote_count.length).fill(average);
+	}
 
 	const randomGraphColor = (alpha) => {
 		const r = Math.floor(Math.random() * (255 - 1 + 1)) + 1;
@@ -88,11 +101,12 @@
 
 			const runs = fileData.map(d => [...d.mote_count]);
 			const avg = [...getAverage()];
+			const fullAvg = [...getFullAverage()];
 			const totalPoints = runs[0].length;
 
 			for(let i = 0; i < runs.length; i++) {
 				chart.data.datasets.push({
-					label: `run${i}`,
+					label: `run${i+1}`,
 					data: [],
 					borderColor: randomGraphColor(0.3),
 					backgroundColor: randomGraphColor(0.05),
@@ -111,6 +125,15 @@
 				pointRadius: 0,
 				order: 0,
 			});
+			chart.data.datasets.push({
+				label: "full average",
+				data: [],
+				borderColor: "rgba(7, 250, 185, 1)",
+				tension: 0.3,
+				fill: false,
+				pointRadius: 0,
+				order: 0,
+			});
 
 			const duration = 10000;
 			const start = performance.now();
@@ -122,6 +145,7 @@
 				for (let i = 0; i < runs.length; i++) {
 					chart.data.datasets[i].data = runs[i].slice(0, count);
 				}
+				chart.data.datasets[runs.length+1].data = fullAvg.slice(0, count);
 				chart.data.datasets[runs.length].data = avg.slice(0, count);
 				chart.update("none");
 				if (progress < 1) requestAnimationFrame(draw);
