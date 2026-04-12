@@ -90,7 +90,8 @@
 					maintainAspectRatio: false,
 					animation: false,
 					scales: {
-						x: { ticks: { maxTicksLimit: 20 } }
+						x: { ticks: { maxTicksLimit: 20, color: 'rgba(255,255,255,0.7)' } },
+						y: { ticks: { color: 'rgba(255,255,255,0.7)' } }
 					},
 				},
 				data: {
