@@ -9,24 +9,79 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_ahhtf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1616317119]
+[node name="SimDataContainer" type="VBoxContainer" parent="." unique_id=1616317119]
 layout_mode = 0
 offset_right = 1098.7013
 offset_bottom = 900.0
 
-[node name="TickLabel" type="Label" parent="VBoxContainer" unique_id=1497788433]
+[node name="TickLabel" type="Label" parent="SimDataContainer" unique_id=1497788433]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Tick: 0"
 
-[node name="MoteCountLabel" type="Label" parent="VBoxContainer" unique_id=1375025530]
+[node name="MoteCountLabel" type="Label" parent="SimDataContainer" unique_id=1375025530]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Current: 0"
 
-[node name="AverageLabel" type="Label" parent="VBoxContainer" unique_id=2094277947]
+[node name="AverageLabel" type="Label" parent="SimDataContainer" unique_id=2094277947]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Average: 0.0"
+
+[node name="MoteDataContainer" type="ColorRect" parent="." unique_id=302910055]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -375.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = 475.0
+grow_horizontal = 0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.41960785)
+
+[node name="CloseButton" type="Button" parent="MoteDataContainer" unique_id=1582877702]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -55.0
+offset_bottom = 41.0
+grow_horizontal = 0
+text = "X"
+
+[node name="MoteDataList" type="VBoxContainer" parent="MoteDataContainer" unique_id=2139501935]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 48.0
+offset_right = 321.0
+offset_bottom = 408.0
+mouse_filter = 2
+theme_override_constants/separation = 24
+
+[node name="MoteID" type="Label" parent="MoteDataContainer/MoteDataList" unique_id=1456820660]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="MoteAge" type="Label" parent="MoteDataContainer/MoteDataList" unique_id=1474463803]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="MoteState" type="Label" parent="MoteDataContainer/MoteDataList" unique_id=965605543]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="MoteFood" type="Label" parent="MoteDataContainer/MoteDataList" unique_id=196778317]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="MoteThirst" type="Label" parent="MoteDataContainer/MoteDataList" unique_id=853515298]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[connection signal="pressed" from="MoteDataContainer/CloseButton" to="." method="_on_close_button_pressed"]

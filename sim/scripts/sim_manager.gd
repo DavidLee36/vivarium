@@ -15,8 +15,9 @@ var curr_tick: int = 0
 var end_at_tick: int = 10
 var auto_end: bool = false
 
-signal mote_change_signal
-signal tick_signal
+signal mote_change_signal # Fire when a mote is registered or un-registered
+signal tick_signal # Fire every tick
+signal mote_click_signal # Fire when a mote is clicked
 
 var sim_data = {
 	"mote_count": []
@@ -24,6 +25,7 @@ var sim_data = {
 
 var mote_scene = load("res://scenes/mote.tscn")
 var motes: Array = []
+var num_motes: int = 0 # Total amount of motes ever spawned, also used for assigning Mote IDs
 var mote_spawn_chance: float = 1
 
 func _ready() -> void:
@@ -49,10 +51,12 @@ func _pre_tick() -> void:
 func _post_tick() -> void:
 	sim_data["mote_count"].append(motes.size())
 	if(curr_tick >= end_at_tick and auto_end): end_simulation()
-	print(curr_tick)
 
 ## Registers a mote to be tracked in the sim, should be called upon mote creation
 func register_mote(mote: Mote) -> void:
+	num_motes += 1
+	mote.id = num_motes
+	mote.birthday = curr_tick
 	motes.append(mote)
 	mote_change_signal.emit()
 
@@ -85,6 +89,9 @@ func get_mote_count_average() -> float:
 	for count in sim_data["mote_count"]:
 		total += count
 	return snapped((float(total) / sim_data["mote_count"].size()), 0.01)
+
+func mote_clicked(mote: Mote) -> void:
+	mote_click_signal.emit(mote)
 
 ## Create a timer to call tick() every time the timer ends
 func _timer_setup() -> void:

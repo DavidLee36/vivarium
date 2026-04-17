@@ -2,14 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dky2uycbfd5dm" path="res://scripts/mote.gd" id="1_a6q65"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8f87p"]
-albedo_color = Color(0, 0.3882353, 1, 1)
-metallic = 0.5
-roughness = 0.5
-
-[sub_resource type="BoxMesh" id="BoxMesh_8f87p"]
-material = SubResource("StandardMaterial3D_8f87p")
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_a6q65"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6q65"]
@@ -67,7 +59,7 @@ blend_shape_mode = 0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_071de"]
 resource_name = "Material"
 cull_mode = 2
-albedo_color = Color(0.36862746, 0.1764706, 1, 1)
+albedo_color = Color(0, 0.30980393, 1, 1)
 roughness = 0.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_33yfx"]
@@ -102,13 +94,17 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_33yfx")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvjha"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_hw7uc"]
+material = SubResource("StandardMaterial3D_fvjha")
+inner_radius = 0.2
+outer_radius = 0.4
+
 [node name="Mote" type="CharacterBody3D" unique_id=1537494994]
 wall_min_slide_angle = 0.08726646
 script = ExtResource("1_a6q65")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=491617556]
-visible = false
-mesh = SubResource("BoxMesh_8f87p")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1402596076]
 shape = SubResource("SphereShape3D_a6q65")
@@ -130,3 +126,10 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="Cube" type="MeshInstance3D" parent="cube" unique_id=1367198429]
 mesh = SubResource("ArrayMesh_fvjha")
+
+[node name="Indicator" type="MeshInstance3D" parent="." unique_id=500933697]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85574615, 0)
+visible = false
+mesh = SubResource("TorusMesh_hw7uc")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

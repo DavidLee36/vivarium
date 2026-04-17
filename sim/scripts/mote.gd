@@ -2,6 +2,11 @@ class_name Mote
 
 extends CharacterBody3D
 
+@onready var indicator = $Indicator
+
+var id: int
+var birthday: int # Tick born
+
 enum State {
 	WANDERING,
 	SEEKING_FOOD,
@@ -29,7 +34,7 @@ var _rotation_basis := Basis.IDENTITY
 
 var _scale: float
 
-## Random id assigned at spawn (not guarunteed to be unique)
+## Random id assigned at spawn (not guarunteed to be unique) and should only be used when a random value is needed to distinguish motes
 var _rid: int
 
 func _ready() -> void:
@@ -71,20 +76,6 @@ func _wander() -> bool:
 		return true
 	return false
 
-func die() -> void:
-	SimManager.unregsiter_mote(self)
-	queue_free()
-
-func _seek_resource() -> void:
-	pass
-
-## Check if a mote is within 'buffer' meters of it's target location
-func _at_position_buffer(pos_1: Vector3, pos_2: Vector3, buffer: float) -> bool:
-	# Currently only deal with x and z
-	if abs(pos_1.x - pos_2.x) < buffer and abs(pos_1.z - pos_2.z) < buffer:
-		return true
-	return false
-
 ## Handle animating(scale and rotating) and movement
 func _animate_and_move(delta: float) -> void:
 	var dir = (target_position - global_position).normalized()
@@ -96,7 +87,25 @@ func _animate_and_move(delta: float) -> void:
 
 	velocity = lerp(velocity, dir * speed, delta * 2.0)
 
-	var s = 1. + sin((Time.get_ticks_msec() + _rid) * 0.005) * 0.08
+	var s = 1. + sin((Time.get_ticks_msec() + _rid) * 0.005) * 0.05
 	transform.basis = _rotation_basis.scaled(Vector3(s, s, s))
 
 	move_and_slide()
+
+## Check if a mote is within 'buffer' meters of it's target location
+func _at_position_buffer(pos_1: Vector3, pos_2: Vector3, buffer: float) -> bool:
+	# Currently only deal with x and z
+	if abs(pos_1.x - pos_2.x) < buffer and abs(pos_1.z - pos_2.z) < buffer:
+		return true
+	return false
+
+func die() -> void:
+	SimManager.unregsiter_mote(self)
+	queue_free()
+
+func _seek_resource() -> void:
+	pass
+
+func _on_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+	if(event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT):
+		SimManager.mote_clicked(self)
