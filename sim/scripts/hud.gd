@@ -39,7 +39,7 @@ func _update_mote_count_labels() -> void:
 func _update_mote_data_labels() -> void:
 	mote_id_label.text = "ID: " + str(curr_mote.id)
 	mote_age_label.text = "Age: " + str(SimManager.curr_tick - curr_mote.id)
-	mote_state_label.text = "State: WANDERING" # TODO: Make this shit accurate
+	mote_state_label.text = "State: " + str(curr_mote.State.find_key(curr_mote.curr_state))
 	mote_food_label.text = "Food: " + str(curr_mote.food)
 	mote_water_label.text = "Water: " + str(curr_mote.water)
 

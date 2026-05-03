@@ -3,6 +3,7 @@
 [ext_resource type="Material" uid="uid://oab4jsbw6br3" path="res://materials/green_ground.tres" id="1_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://0egsluq30sym" path="res://scenes/player.tscn" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://bd76fmf45v4da" path="res://scenes/hud.tscn" id="3_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://ck2ohjhqo342n" path="res://scenes/burger.tscn" id="4_k0juu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4wyf3"]
 
@@ -49,3 +50,24 @@ shape = SubResource("WorldBoundaryShape3D_4wyf3")
 transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 53, 69)
 
 [node name="HUD" parent="." unique_id=1986571486 instance=ExtResource("3_4wyf3")]
+
+[node name="Burger" parent="." unique_id=881066500 instance=ExtResource("4_k0juu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3, 53)
+
+[node name="Burger2" parent="." unique_id=559858507 instance=ExtResource("4_k0juu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, 50)
+
+[node name="Burger3" parent="." unique_id=449423893 instance=ExtResource("4_k0juu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 45)
+
+[node name="Burger4" parent="." unique_id=694515536 instance=ExtResource("4_k0juu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, -39)
+
+[node name="Burger5" parent="." unique_id=1892229886 instance=ExtResource("4_k0juu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 33)
+
+[node name="Burger6" parent="." unique_id=75088440 instance=ExtResource("4_k0juu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -41)
+
+[node name="Burger7" parent="." unique_id=869311855 instance=ExtResource("4_k0juu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, 31)

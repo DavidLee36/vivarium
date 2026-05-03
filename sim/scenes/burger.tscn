@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ck2ohjhqo342n"]
+
+[ext_resource type="PackedScene" uid="uid://dk8ubb4snfidy" path="res://assets/food/Burger_low-poly.glb" id="1_mroen"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lp3hx"]
+height = 0.3
+radius = 0.75
+
+[node name="Burger" type="StaticBody3D" unique_id=881066500]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1049434063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+shape = SubResource("CylinderShape3D_lp3hx")
+
+[node name="Burger_low-poly" parent="." unique_id=255897884 instance=ExtResource("1_mroen")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04935704, 0, 0.012218475)
+
+[node name="Area3D" type="Area3D" parent="." unique_id=671523738]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D" unique_id=115395981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+shape = SubResource("CylinderShape3D_lp3hx")

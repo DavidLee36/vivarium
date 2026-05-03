@@ -10,10 +10,17 @@ var birthday: int # Tick born
 enum State {
 	WANDERING,
 	SEEKING_FOOD,
-	SEEKING_WATER
+	EATING,
+	SEEKING_WATER,
+	DRINKING
 }
 
-var state: State = State.WANDERING
+enum ResourceType {
+	WATER,
+	FOOD
+}
+
+var curr_state: State = State.WANDERING
 
 var target_position: Vector3
 var last_tick_position: Vector3
@@ -25,10 +32,13 @@ var move_r: int = 20
 
 var sight_r: int = 10
 var speed: int = 5
-var death_chance: float = 0.05 # between 0-1
+var death_chance: float = 0.05 # percentage between 0-1
 
 var food: float = 100
 var water: float = 100
+var hunger_threshold: float = 20 # food level when the mote begins to actively seek out food
+var thirst_threshold: float = 25 # water level when the mote begins to actively seek out water
+var satiety_level: float = 80 # when left uninterupted, how much eating or drinking a mote will do before being satisfied and moving on
 
 var _rotation_basis := Basis.IDENTITY
 
@@ -44,29 +54,45 @@ func _ready() -> void:
 	SimManager.register_mote(self)
 
 func _physics_process(delta: float) -> void:
-	_update_curr_state()
 	_movement_logic(delta)
 
 ## Code that should run at every tick of the simulation, not every frame
 func tick() -> void:
 	if randf_range(0, 1) <= death_chance:
 		die()
-	
-	if _at_position_buffer(global_position, last_tick_position, 0.05):
-		stuck = true
-	else: stuck = false
-	last_tick_position = global_position
+	_handle_stuck()
+	_state_logic()
 
 func _movement_logic(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= 20 * delta
-	if state == State.WANDERING:
+	if curr_state == State.WANDERING:
 		_wander()
+	if curr_state == State.SEEKING_FOOD or curr_state == State.SEEKING_WATER:
+		var r : ResourceType
+		if curr_state == State.SEEKING_FOOD: r = ResourceType.FOOD
+		else: r = ResourceType.WATER
+		_seek_resource(r)
 
 	_animate_and_move(delta)
 
-func _update_curr_state() -> void:
-	pass
+## Determine what state the mote should currently be in, switching to eating or drinking
+## will be handled at the frame level rather than tick
+func _state_logic() -> void:
+	# 1. If currently eating or drinking
+	if curr_state == State.EATING and food > satiety_level:
+		curr_state = State.WANDERING
+	if curr_state == State.DRINKING and water > satiety_level:
+		curr_state = State.WANDERING
+
+	# 2. If hungry or thirsty
+	if curr_state != State.SEEKING_FOOD and curr_state != State.SEEKING_WATER:
+		if water <= thirst_threshold:
+			curr_state = State.SEEKING_WATER
+			return
+		if food <= hunger_threshold:
+			curr_state = State.SEEKING_FOOD
+			return
 
 ## Aimlessly wander around
 func _wander() -> bool:
@@ -75,6 +101,9 @@ func _wander() -> bool:
 		target_position.z = clamp(randi_range(int(global_position.z) - move_r, int(global_position.z) + move_r), SimManager.bottom_bound, SimManager.top_bound)
 		return true
 	return false
+
+func _seek_resource(resource: ResourceType) -> void:
+	pass
 
 ## Handle animating(scale and rotating) and movement
 func _animate_and_move(delta: float) -> void:
@@ -92,6 +121,13 @@ func _animate_and_move(delta: float) -> void:
 
 	move_and_slide()
 
+## Get unstuck
+func _handle_stuck() -> void:
+	if _at_position_buffer(global_position, last_tick_position, 0.05):
+		stuck = true
+	else: stuck = false
+	last_tick_position = global_position
+
 ## Check if a mote is within 'buffer' meters of it's target location
 func _at_position_buffer(pos_1: Vector3, pos_2: Vector3, buffer: float) -> bool:
 	# Currently only deal with x and z
@@ -102,9 +138,6 @@ func _at_position_buffer(pos_1: Vector3, pos_2: Vector3, buffer: float) -> bool:
 func die() -> void:
 	SimManager.unregsiter_mote(self)
 	queue_free()
-
-func _seek_resource() -> void:
-	pass
 
 func _on_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if(event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT):

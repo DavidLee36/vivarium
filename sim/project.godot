@@ -24,6 +24,10 @@ SimManager="*uid://bx67foyk87h3h"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/unidot_importer/plugin.cfg")
+
 [input]
 
 move_left={

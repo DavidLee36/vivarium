@@ -1,6 +1,7 @@
 extends Node3D
 
 @export var default_speed: float = 15
+@export var sprint_multiplier: float = 5
 @export var sensitivity: float = 0.3
 
 var _mouse_delta := Vector2.ZERO
@@ -25,7 +26,7 @@ func _handle_input() -> void:
 
 func _movement_logic(delta: float) -> void:
 	# Speed
-	var speed = default_speed * 4 if Input.is_action_pressed("shift") else default_speed
+	var speed = default_speed * sprint_multiplier if Input.is_action_pressed("shift") else default_speed
 	
 	# WASD
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
