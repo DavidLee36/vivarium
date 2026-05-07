@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c26srvovprmu6"]
 
 [ext_resource type="Material" uid="uid://oab4jsbw6br3" path="res://materials/green_ground.tres" id="1_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://cefv3gpa12o4o" path="res://scenes/map.tscn" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://0egsluq30sym" path="res://scenes/player.tscn" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://bd76fmf45v4da" path="res://scenes/hud.tscn" id="3_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://ck2ohjhqo342n" path="res://scenes/burger.tscn" id="4_k0juu"]
@@ -33,15 +34,18 @@ environment = SubResource("Environment_71j4m")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Map" type="Node3D" parent="." unique_id=172907629]
+[node name="Map" parent="." unique_id=155783027 instance=ExtResource("1_71j4m")]
 
-[node name="Floor" type="StaticBody3D" parent="Map" unique_id=117586258]
+[node name="Masdfap" type="Node3D" parent="." unique_id=172907629]
+visible = false
 
-[node name="FloorMesh" type="MeshInstance3D" parent="Map/Floor" unique_id=1414479997]
+[node name="Floor" type="StaticBody3D" parent="Masdfap" unique_id=117586258]
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Masdfap/Floor" unique_id=1414479997]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = SubResource("BoxMesh_k0juu")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Floor" unique_id=1979634098]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Masdfap/Floor" unique_id=1979634098]
 shape = SubResource("WorldBoundaryShape3D_4wyf3")
 
 [node name="Motes" type="Node3D" parent="." unique_id=2069576188]

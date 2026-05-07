@@ -4,10 +4,10 @@ var scene_tree
 var motes_node
 var hud
 
-var left_bound: float = -75
-var right_bound: float = 75
-var top_bound: float = 75
-var bottom_bound: float = -75
+var left_bound: float = 0
+var right_bound: float = 256
+var top_bound: float = 256
+var bottom_bound: float = 0
 
 var TICK_TIME: float = 0.5 # In seconds
 var tick_timer: Timer
